@@ -15,7 +15,7 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 pos = input('Введите искомую должность: ')
 position_data = {}
 while True:
-    response = requests.get(url + 'search/vacancy?clusters=true&area=1&enable_snippets=true&salary=&st=searchVacancy&text=' + pos, headers=headers)
+    response = requests.get(url + 'search/vacancy?clusters=true&area=1&enable_snippets=true&salary=&st=searchVacancy&text=' + pos, params=params, headers=headers)
     soup = bs(response.text, 'html.parser')
 
     position_list = soup.find_all('div', attrs={'class': 'vacancy-serp-item'})
