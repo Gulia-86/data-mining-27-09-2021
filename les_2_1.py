@@ -58,12 +58,12 @@ while True:
                 position_compensation_max = int("".join([str(l) for l in list]))
 
             elif position_compensation.find("от") != -1:
-                list = re.findall(r"\d+",position_compensation_min)
+                list = re.findall(r"\d+",position_compensation)
                 position_compensation_min = int("".join([str(l) for l in list]))
                 position_compensation_max = None
 
             elif position_compensation.find("до") != -1:
-                list = re.findall(r"\d+",position_compensation_max)
+                list = re.findall(r"\d+",position_compensation)
                 position_compensation_max = int("".join([str(l) for l in list]))
                 position_compensation_min = None
 
