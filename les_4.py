@@ -26,14 +26,14 @@ all_news = []
 for item in items:
     news = {}
     #название источника
-    source = item.xpath("//a[contains(@class, 'mg-card__source-link')]/text()")
+    source = item.xpath(".//a[contains(@class, 'mg-card__source-link')]/text()")
     #наименование новости
-    name = item.xpath("//h2[contains(@class, 'mg-card__title')]/text()")
+    name = item.xpath(".//h2[contains(@class, 'mg-card__title')]/text()")
     name = str(name).replace("\\xa0", " ") #удаляем $nbsp
     #ссылку на новость
-    link = item.xpath("//a[contains(@class, 'mg-card__link')]/@href")
+    link = item.xpath(".//a[contains(@class, 'mg-card__link')]/@href")
     #дата публикации, в этом случае время
-    time = item.xpath("//span[contains(@class, 'mg-card-source__time')]/text()")
+    time = item.xpath(".//span[contains(@class, 'mg-card-source__time')]/text()")
 
     news['source'] = source
     print(source)
