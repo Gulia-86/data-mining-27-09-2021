@@ -20,27 +20,30 @@ header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/5
 response = requests.get("https://yandex.ru/news", headers=header)
 dom = html.fromstring(response.text)
 
-items = dom.xpath("//div[contains(@class, 'mg-card__content')]")
-print(type(items))
+items = dom.xpath("//article[contains(@class, 'mg-card')]")
+
 all_news = []
 for item in items:
     news = {}
     #название источника
-    source = item.xpath(".//a[contains(@class, 'mg-card__source-link')]/text()")
+    source = item.xpath(".//a[@class = 'mg-card__source-link']/text()")
     #наименование новости
-    name = item.xpath(".//h2[contains(@class, 'mg-card__title')]/text()")
+    name = item.xpath(".//h2[@class = 'mg-card__title']/text()")
     name = str(name).replace("\\xa0", " ") #удаляем $nbsp
     #ссылку на новость
-    link = item.xpath(".//a[contains(@class, 'mg-card__link')]/@href")
+    link = item.xpath(".//a[@class = 'mg-card__link']/@href")
     #дата публикации, в этом случае время
-    time = item.xpath(".//span[contains(@class, 'mg-card-source__time')]/text()")
+    time = item.xpath(".//span[@class = 'mg-card-source__time']/text()")
 
     news['source'] = source
-    print(source)
     news['name'] = name
     news['link'] = link
     news['time'] = time
     all_news.append(news)
-    base.insert_one(news)
+    try:
+        base.update_one({'link': news['link']}, {'$set': news}, upsert=True)
+    except Exception as exc:
+        print('Что-то пошло не так/n', exc)
+        continue
 
-#pprint(all_news)
+pprint(all_news)
