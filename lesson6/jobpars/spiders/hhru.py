@@ -20,5 +20,5 @@ class HhruSpider(scrapy.Spider):
     def vacancy_parse(self, response: HtmlResponse):
         name = response.xpath("//h1[@data-qa='vacancy-title']/text()").get()
         salary = response.xpath("//p[@class='vacancy-salary']/span/text()").getall()
-        item = JobparsItem(name=name, salary=salary)
+        item = JobparsItem(name=name, salary=salary, link = response.url)
         yield item
